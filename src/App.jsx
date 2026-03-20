@@ -1,7 +1,21 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import fetchWeather from "./fetchWeather"
 
 function App() {
+  // Initialize from localStorage so it persists on refresh
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    // This adds [data-theme="dark"] to the <html> tag
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+
   const firstFetch = useRef(false);
 
   useEffect(() => {
@@ -12,9 +26,11 @@ function App() {
 
   }, [firstFetch]);
 
+
   return (
     <>
       Hello World
+      <button onClick={toggleTheme}>Toggle Theme</button>
     </>
   )
 }
