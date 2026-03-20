@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import fetchWeather from "./fetchWeather"
 
+import Header from "./components/header";
+
 function App() {
   // Initialize from localStorage so it persists on refresh
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -29,8 +31,9 @@ function App() {
 
   return (
     <>
-      Hello World
-      <button onClick={toggleTheme}>Toggle Theme</button>
+      <Header />
+
+      <div style={{ backgroundColor: "royalblue", height: "100%" }}>Main</div>
     </>
   )
 }
