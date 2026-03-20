@@ -1,0 +1,21 @@
+/* Light Theme */
+:root {
+  --background: #FFFFFF;
+  --text: #000000;
+  --primary: #F29F67;
+
+  --extra1: #3B8FF3;
+  --extra2: #34B1AA;
+  --extra3: #E0B50F;
+}
+
+/* Dark Theme */
+[data-theme='dark'] {
+  --background: #1E1E2C;
+  --text: #FFFFFF;
+  --primary: #F29F67;
+
+  --extra1: #3B8FF3;
+  --extra2: #34B1AA;
+  --extra3: #E0B50F;
+}
