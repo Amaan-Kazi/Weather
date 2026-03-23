@@ -1,3 +1,3 @@
 export default function Title() {
-  return <div>Title</div>
+  return <div>Weather Dashboard</div>
 }

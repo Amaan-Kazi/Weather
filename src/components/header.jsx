@@ -8,7 +8,8 @@ export default function Header() {
       backgroundColor: "sandybrown",
       padding: "10px",
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      alignItems: "center"
     }}
   >
     <Title />

@@ -1,3 +1,7 @@
+import { Moon } from "lucide-react";
+
 export default function ThemeToggle() {
-  return <div>Theme Toggle</div>
+  return <div>
+    <Moon />
+  </div>
 }
