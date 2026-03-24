@@ -1,41 +1,21 @@
-import SearchBar from "./search-bar";
 import DailyForecastItem from "./DailyForecast";
 
-const dailyData = {
-  time: [
-    new Date("2026-03-24"),
-    new Date("2026-03-25"),
-    new Date("2026-03-26"),
-    new Date("2026-03-27"),
-    new Date("2026-03-28"),
-    new Date("2026-03-29"),
-    new Date("2026-03-30"),
-  ],
-  weather_code: [3, 3, 1, 1, 2, 2, 2],
-  temperature_2m_max: [29.7, 28.3, 29.4, 29.9, 28.3, 27.6, 28.0],
-  temperature_2m_min: [27.8, 27.2, 27.1, 27.9, 26.6, 26.6, 26.9],
-  daylight_duration: [43862.62, 43927.67, 43992.91, 44058.30, 44123.79, 44189.35, 44254.93],
-  sunshine_duration: [42420.29, 41329.20, 41791.67, 43255.93, 43299.88, 43101.15, 43145.53],
-  uv_index_max: [7.90, 7.95, 7.95, 7.95, 8.00, 7.75, 7.80],
-  precipitation_sum: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00],
-  wind_speed_10m_max: [19.7, 15.9, 23.5, 16.3, 17.7, 18.3, 17.1],
-  wind_gusts_10m_max: [27.4, 21.2, 31.3, 22.3, 24.1, 24.1, 24.5],
-};
+export default function Main({ weatherData }) {
+  const forecastDays = weatherData?.daily 
+    ? weatherData.daily.time.map((time, index) => ({
+        time,
+        weather_code: weatherData.daily.weather_code[index],
+        temperature_2m_max: weatherData.daily.temperature_2m_max[index],
+        temperature_2m_min: weatherData.daily.temperature_2m_min[index],
+        daylight_duration: weatherData.daily.daylight_duration[index],
+        sunshine_duration: weatherData.daily.sunshine_duration[index],
+        uv_index_max: weatherData.daily.uv_index_max[index],
+        precipitation_sum: weatherData.daily.precipitation_sum[index],
+        wind_speed_10m_max: weatherData.daily.wind_speed_10m_max[index],
+        wind_gusts_10m_max: weatherData.daily.wind_gusts_10m_max[index],
+      }))
+    : [];
 
-const forecastDays = dailyData.time.map((time, index) => ({
-  time,
-  weather_code: dailyData.weather_code[index],
-  temperature_2m_max: dailyData.temperature_2m_max[index],
-  temperature_2m_min: dailyData.temperature_2m_min[index],
-  daylight_duration: dailyData.daylight_duration[index],
-  sunshine_duration: dailyData.sunshine_duration[index],
-  uv_index_max: dailyData.uv_index_max[index],
-  precipitation_sum: dailyData.precipitation_sum[index],
-  wind_speed_10m_max: dailyData.wind_speed_10m_max[index],
-  wind_gusts_10m_max: dailyData.wind_gusts_10m_max[index],
-}));
-
-export default function Main() {
   return (
     <div className="main-layout">
       <style>{`
@@ -246,6 +226,13 @@ export default function Main() {
           border: 5px solid transparent;
           border-top-color: var(--text);
         }
+
+        .empty-state {
+          color: var(--search-placeholder);
+          font-size: 14px;
+          text-align: center;
+          padding: 20px;
+        }
       `}</style>
 
       <div className="main-top">
@@ -262,11 +249,15 @@ export default function Main() {
       <div className="main-bottom">
         <div className="main-bottom-title">Daily Forecast</div>
         <div className="main-bottom-content">
-          <div className="daily-forecast-container">
-            {forecastDays.map((day, index) => (
-              <DailyForecastItem key={index} data={day} />
-            ))}
-          </div>
+          {forecastDays.length > 0 ? (
+            <div className="daily-forecast-container">
+              {forecastDays.map((day, index) => (
+                <DailyForecastItem key={index} data={day} />
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">Select a location to see the weather forecast</div>
+          )}
         </div>
       </div>
     </div>

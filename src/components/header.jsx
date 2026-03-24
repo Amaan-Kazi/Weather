@@ -2,7 +2,7 @@ import SearchBar from "./search-bar"
 import ThemeToggle from "./theme-toggle"
 import Title from "./title"
 
-export default function Header() {
+export default function Header({ onLocationSelect }) {
   return <div
     style={{
       backgroundColor: "var(--background2)",
@@ -14,7 +14,7 @@ export default function Header() {
     }}
   >
     <Title />
-    <SearchBar />
+    <SearchBar onLocationSelect={onLocationSelect} />
     <ThemeToggle />
   </div>
 }

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import fetchWeather from "./fetchWeather"
 
 import Header from "./components/header";
@@ -7,23 +7,19 @@ import Main from "./components/main";
 import { ThemeProvider } from "./context/theme"
 
 function App() {
-  const firstFetch = useRef(false);
+  const [weatherData, setWeatherData] = useState(null);
 
-  // useEffect(() => {
-  // if (firstFetch.current) return;
-
-  // fetchWeather();
-  // firstFetch.current = true;
-
-  // }, [firstFetch]);
-
+  const handleLocationSelect = async (location) => {
+    const data = await fetchWeather(location.latitude, location.longitude);
+    setWeatherData(data);
+  };
 
   return (
     <ThemeProvider>
       <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-        <Header />
+        <Header onLocationSelect={handleLocationSelect} />
 
-        <Main />
+        <Main weatherData={weatherData} />
       </div>
     </ThemeProvider>
   )

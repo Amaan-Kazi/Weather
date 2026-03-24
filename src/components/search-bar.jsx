@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { MapPin } from "lucide-react";
-import fetchWeather from "../fetchWeather";
 
-export default function SearchBar() {
+export default function SearchBar({ onLocationSelect }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef(null);
   const wrapperRef = useRef(null);
@@ -54,21 +52,17 @@ export default function SearchBar() {
   }, []);
 
   const handleSelect = (result) => {
-    setSelectedLocation({
+    const location = {
       name: result.name,
       latitude: result.latitude,
       longitude: result.longitude,
-    });
+    };
     setQuery(result.name);
     setResults([]);
-    console.log("Selected location:", result.name, result.latitude, result.longitude);
-  };
-
-  useEffect(() => {
-    if (selectedLocation) {
-      fetchWeather(selectedLocation.latitude, selectedLocation.longitude);
+    if (onLocationSelect) {
+      onLocationSelect(location);
     }
-  }, [selectedLocation]);
+  };
 
   return (
     <>
