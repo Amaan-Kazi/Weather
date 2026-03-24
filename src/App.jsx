@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import fetchWeather from "./fetchWeather"
 
 import Header from "./components/header";
+import Main from "./components/main";
 
 import { ThemeProvider } from "./context/theme"
 
@@ -22,7 +23,7 @@ function App() {
       <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
         <Header />
 
-        <div style={{ backgroundColor: "var(--background)", flex: 1 }}>Main</div>
+        <Main />
       </div>
     </ThemeProvider>
   )
