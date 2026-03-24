@@ -1,4 +1,5 @@
 import DailyForecastItem from "./DailyForecast";
+import HourlyForecastItem from "./HourlyForecast";
 
 export default function Main({ weatherData }) {
   const forecastDays = weatherData?.daily 
@@ -13,6 +14,15 @@ export default function Main({ weatherData }) {
         precipitation_sum: weatherData.daily.precipitation_sum[index],
         wind_speed_10m_max: weatherData.daily.wind_speed_10m_max[index],
         wind_gusts_10m_max: weatherData.daily.wind_gusts_10m_max[index],
+      }))
+    : [];
+
+  const forecastHours = weatherData?.hourly
+    ? weatherData.hourly.time.slice(0, 24).map((time, index) => ({
+        time,
+        weather_code: weatherData.hourly.weather_code[index],
+        temperature_2m: weatherData.hourly.temperature_2m[index],
+        relative_humidity_2m: weatherData.hourly.relative_humidity_2m[index],
       }))
     : [];
 
@@ -32,6 +42,30 @@ export default function Main({ weatherData }) {
           display: flex;
           flex: 1;
           gap: 20px;
+          min-height: 0;
+        }
+
+        .main-section {
+          flex: 1;
+          background: var(--background2);
+          border-radius: 16px;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+        }
+
+        .main-section-title {
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--text);
+          margin-bottom: 12px;
+          flex-shrink: 0;
+        }
+
+        .main-section-content {
+          flex: 1;
+          overflow-y: auto;
           min-height: 0;
         }
 
@@ -56,25 +90,6 @@ export default function Main({ weatherData }) {
           overflow-x: auto;
           overflow-y: hidden;
           min-height: 0;
-        }
-
-        .main-section {
-          flex: 1;
-          background: var(--background2);
-          border-radius: 16px;
-          padding: 20px;
-        }
-
-        .section-title {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--text);
-          margin-bottom: 12px;
-        }
-
-        .section-content {
-          color: var(--text);
-          opacity: 0.7;
         }
 
         /* Daily Forecast Styles */
@@ -195,6 +210,68 @@ export default function Main({ weatherData }) {
           white-space: nowrap;
         }
 
+        /* Hourly Forecast Styles */
+        .hourly-forecast-list {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .hourly-forecast-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 12px;
+          background: var(--search-bg);
+          border-radius: 12px;
+          border: 1px solid var(--search-border);
+        }
+
+        .hourly-forecast-icon {
+          color: var(--text);
+          flex-shrink: 0;
+        }
+
+        .hourly-forecast-datetime {
+          display: flex;
+          flex-direction: column;
+          min-width: 80px;
+        }
+
+        .hourly-forecast-time {
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--text);
+        }
+
+        .hourly-forecast-date {
+          font-size: 12px;
+          color: var(--search-placeholder);
+        }
+
+        .hourly-forecast-data {
+          display: flex;
+          gap: 20px;
+          margin-left: auto;
+        }
+
+        .hourly-forecast-data-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          color: var(--search-placeholder);
+        }
+
+        .hourly-forecast-data-icon {
+          color: var(--extra1);
+        }
+
+        .hourly-forecast-data-value {
+          color: var(--text);
+          font-weight: 500;
+        }
+
         /* Tooltip Styles */
         .tooltip-wrapper {
           position: relative;
@@ -237,12 +314,28 @@ export default function Main({ weatherData }) {
 
       <div className="main-top">
         <div className="main-section">
-          <div className="section-title">Current Conditions</div>
-          <div className="section-content">Current Conditions content</div>
+          <div className="main-section-title">Current Conditions</div>
+          <div className="main-section-content">
+            {weatherData?.current ? (
+              <div>Current: {weatherData.current.temperature_2m}°C</div>
+            ) : (
+              <div className="empty-state">Select a location to see current conditions</div>
+            )}
+          </div>
         </div>
         <div className="main-section">
-          <div className="section-title">Hourly Forecast</div>
-          <div className="section-content">Hourly Forecast content</div>
+          <div className="main-section-title">Hourly Forecast</div>
+          <div className="main-section-content">
+            {forecastHours.length > 0 ? (
+              <div className="hourly-forecast-list">
+                {forecastHours.map((hour, index) => (
+                  <HourlyForecastItem key={index} data={hour} />
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">Select a location to see hourly forecast</div>
+            )}
+          </div>
         </div>
       </div>
 
