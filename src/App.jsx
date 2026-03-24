@@ -8,13 +8,13 @@ import { ThemeProvider } from "./context/theme"
 function App() {
   const firstFetch = useRef(false);
 
-  useEffect(() => {
-    if (firstFetch.current) return;
+  // useEffect(() => {
+  // if (firstFetch.current) return;
 
-    fetchWeather();
-    firstFetch.current = true;
+  // fetchWeather();
+  // firstFetch.current = true;
 
-  }, [firstFetch]);
+  // }, [firstFetch]);
 
 
   return (
