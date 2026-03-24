@@ -56,12 +56,26 @@ export default function Main() {
         }
 
         .main-bottom {
-          height: 300px;
           background: var(--background2);
           border-radius: 16px;
           padding: 20px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .main-bottom-title {
+          font-size: 18px;
+          font-weight: 600;
+          color: var(--text);
+          margin-bottom: 12px;
+          flex-shrink: 0;
+        }
+
+        .main-bottom-content {
+          flex: 1;
           overflow-x: auto;
           overflow-y: hidden;
+          min-height: 0;
         }
 
         .main-section {
@@ -87,42 +101,57 @@ export default function Main() {
         .daily-forecast-container {
           display: flex;
           gap: 12px;
-          min-width: max-content;
+          min-width: min-content;
         }
 
         .daily-forecast-item {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: 6px;
+          gap: 8px;
           padding: 14px 16px;
           background: var(--search-bg);
           border-radius: 14px;
           border: 1px solid var(--search-border);
-          min-width: 120px;
+          flex: 1;
+          min-width: 150px;
+          max-width: 180px;
+        }
+
+        .daily-forecast-header-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .daily-forecast-icon {
+          color: var(--text);
+          flex-shrink: 0;
+          padding-top: 2px;
+        }
+
+        .daily-forecast-day-date {
+          display: flex;
+          flex-direction: column;
         }
 
         .daily-forecast-day {
           font-size: 14px;
           font-weight: 600;
           color: var(--text);
+          line-height: 1.2;
         }
 
         .daily-forecast-date {
           font-size: 12px;
           color: var(--search-placeholder);
-        }
-
-        .daily-forecast-icon {
-          color: var(--text);
-          margin: 4px 0;
+          line-height: 1.2;
         }
 
         .daily-forecast-groups {
           display: flex;
           flex-direction: column;
-          gap: 10px;
-          width: 100%;
+          gap: 8px;
+          margin-top: 4px;
         }
 
         .daily-forecast-group {
@@ -131,12 +160,29 @@ export default function Main() {
           gap: 2px;
         }
 
+        .daily-forecast-group.inline {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          gap: 8px;
+        }
+
         .daily-forecast-group-title {
           font-size: 11px;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.5px;
           margin-bottom: 2px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .daily-forecast-group.inline .daily-forecast-group-title {
+          margin-bottom: 0;
+          flex-shrink: 0;
         }
 
         .daily-forecast-group-item {
@@ -146,6 +192,15 @@ export default function Main() {
           cursor: help;
         }
 
+        .daily-forecast-group.inline .daily-forecast-group-item {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 4px;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
         .daily-forecast-group-label {
           color: var(--search-placeholder);
         }
@@ -153,6 +208,11 @@ export default function Main() {
         .daily-forecast-group-value {
           color: var(--text);
           font-weight: 500;
+        }
+
+        .daily-forecast-group-value.inline {
+          font-weight: 600;
+          white-space: nowrap;
         }
 
         /* Tooltip Styles */
@@ -200,11 +260,13 @@ export default function Main() {
       </div>
 
       <div className="main-bottom">
-        <div className="section-title">Daily Forecast</div>
-        <div className="daily-forecast-container">
-          {forecastDays.map((day, index) => (
-            <DailyForecastItem key={index} data={day} />
-          ))}
+        <div className="main-bottom-title">Daily Forecast</div>
+        <div className="main-bottom-content">
+          <div className="daily-forecast-container">
+            {forecastDays.map((day, index) => (
+              <DailyForecastItem key={index} data={day} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
