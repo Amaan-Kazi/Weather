@@ -5,7 +5,7 @@ import Title from "./title"
 export default function Header() {
   return <div
     style={{
-      backgroundColor: "sandybrown",
+      backgroundColor: "var(--background2)",
       padding: "10px",
       display: "flex",
       justifyContent: "space-between",

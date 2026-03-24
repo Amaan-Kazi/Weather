@@ -22,7 +22,7 @@ function App() {
       <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
         <Header />
 
-        <div style={{ backgroundColor: "royalblue", flex: 1 }}>Main</div>
+        <div style={{ backgroundColor: "var(--background)", flex: 1 }}>Main</div>
       </div>
     </ThemeProvider>
   )
