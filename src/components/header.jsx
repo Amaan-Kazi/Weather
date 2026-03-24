@@ -9,7 +9,8 @@ export default function Header() {
       padding: "10px",
       display: "flex",
       justifyContent: "space-between",
-      alignItems: "center"
+      alignItems: "center",
+      gap: "20px",
     }}
   >
     <Title />
