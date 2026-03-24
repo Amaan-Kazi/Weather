@@ -18,6 +18,11 @@
   --detect-btn-text: #1A1A1A;
   --detect-btn-hover: #D1D1D6;
   --icon-color: #8E8E93;
+  --search-results-bg: #FFFFFF;
+  --search-results-border: #E5E5EA;
+  --search-result-hover: #F5F5F7;
+  --search-result-text: #1A1A1A;
+  --search-result-secondary: #8E8E93;
 }
 
 /* Dark Theme */
@@ -40,4 +45,9 @@
   --detect-btn-text: #FFFFFF;
   --detect-btn-hover: #4A4A52;
   --icon-color: #8E8E93;
+  --search-results-bg: #2C2C34;
+  --search-results-border: #3A3A42;
+  --search-result-hover: #3A3A42;
+  --search-result-text: #FFFFFF;
+  --search-result-secondary: #8E8E93;
 }
