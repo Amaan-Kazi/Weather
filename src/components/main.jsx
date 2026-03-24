@@ -60,7 +60,8 @@ export default function Main() {
           background: var(--background2);
           border-radius: 16px;
           padding: 20px;
-          overflow-y: auto;
+          overflow-x: auto;
+          overflow-y: hidden;
         }
 
         .main-section {
@@ -85,69 +86,105 @@ export default function Main() {
         /* Daily Forecast Styles */
         .daily-forecast-container {
           display: flex;
-          flex-direction: column;
           gap: 12px;
+          min-width: max-content;
         }
 
         .daily-forecast-item {
           display: flex;
           flex-direction: column;
-          gap: 8px;
-          padding: 12px;
-          background: var(--search-bg);
-          border-radius: 12px;
-          border: 1px solid var(--search-border);
-        }
-
-        .daily-forecast-header {
-          display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 6px;
+          padding: 14px 16px;
+          background: var(--search-bg);
+          border-radius: 14px;
+          border: 1px solid var(--search-border);
+          min-width: 120px;
         }
 
         .daily-forecast-day {
-          font-size: 15px;
+          font-size: 14px;
           font-weight: 600;
           color: var(--text);
         }
 
         .daily-forecast-date {
-          font-size: 13px;
+          font-size: 12px;
           color: var(--search-placeholder);
         }
 
         .daily-forecast-icon {
-          margin-left: auto;
           color: var(--text);
-          display: flex;
-          align-items: center;
+          margin: 4px 0;
         }
 
-        .daily-forecast-data {
+        .daily-forecast-groups {
           display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
+          flex-direction: column;
+          gap: 10px;
+          width: 100%;
         }
 
-        .daily-forecast-data-item {
+        .daily-forecast-group {
           display: flex;
-          align-items: center;
-          gap: 4px;
+          flex-direction: column;
+          gap: 2px;
+        }
+
+        .daily-forecast-group-title {
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 2px;
+        }
+
+        .daily-forecast-group-item {
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
           cursor: help;
         }
 
-        .daily-forecast-data-icon {
+        .daily-forecast-group-label {
           color: var(--search-placeholder);
         }
 
-        .daily-forecast-data-value {
-          font-size: 12px;
+        .daily-forecast-group-value {
           color: var(--text);
-          opacity: 0.8;
+          font-weight: 500;
         }
 
-        .daily-forecast-data-item[title] {
+        /* Tooltip Styles */
+        .tooltip-wrapper {
           position: relative;
+          display: inline-block;
+        }
+
+        .tooltip-content {
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--text);
+          color: var(--background);
+          padding: 6px 10px;
+          border-radius: 6px;
+          font-size: 11px;
+          white-space: nowrap;
+          z-index: 1000;
+          margin-bottom: 6px;
+          pointer-events: none;
+        }
+
+        .tooltip-content::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          border: 5px solid transparent;
+          border-top-color: var(--text);
         }
       `}</style>
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Sun,
   CloudSun,
@@ -7,13 +8,6 @@ import {
   CloudRain,
   Snowflake,
   CloudLightning,
-  Thermometer,
-  Sunrise,
-  Sunset,
-  SunMedium,
-  Droplets,
-  Wind,
-  Gauge,
 } from "lucide-react";
 
 const weatherCodeToIcon = (code) => {
@@ -75,15 +69,60 @@ const formatDay = (date) => {
   return date.toLocaleDateString("en-US", { weekday: "long" });
 };
 
-const dataFields = [
-  { key: "temperature_2m_max", label: "High", unit: "°C", icon: Thermometer, tooltip: "Maximum temperature" },
-  { key: "temperature_2m_min", label: "Low", unit: "°C", icon: Thermometer, tooltip: "Minimum temperature" },
-  { key: "daylight_duration", label: "Daylight", unit: "h", icon: Sunrise, tooltip: "Total daylight hours", convert: (v) => (v / 3600).toFixed(1) },
-  { key: "sunshine_duration", label: "Sunshine", unit: "h", icon: SunMedium, tooltip: "Total sunshine hours", convert: (v) => (v / 3600).toFixed(1) },
-  { key: "uv_index_max", label: "UV Index", unit: "", icon: Sun, tooltip: "Maximum UV index", convert: (v) => v.toFixed(1) },
-  { key: "precipitation_sum", label: "Precipitation", unit: "mm", icon: Droplets, tooltip: "Total precipitation" },
-  { key: "wind_speed_10m_max", label: "Wind", unit: "km/h", icon: Wind, tooltip: "Maximum wind speed" },
-  { key: "wind_gusts_10m_max", label: "Gusts", unit: "km/h", icon: Wind, tooltip: "Maximum wind gusts" },
+function Tooltip({ text, children }) {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div
+      className="tooltip-wrapper"
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+    >
+      {children}
+      {show && <div className="tooltip-content">{text}</div>}
+    </div>
+  );
+}
+
+const dataGroups = [
+  {
+    title: "Temperature",
+    color: "var(--extra1)",
+    items: [
+      { key: "temperature_2m_max", label: "High", unit: "°C", convert: (v) => v.toFixed(1), tooltip: "Maximum temperature for the day" },
+      { key: "temperature_2m_min", label: "Low", unit: "°C", convert: (v) => v.toFixed(1), tooltip: "Minimum temperature for the day" },
+    ],
+  },
+  {
+    title: "Sun",
+    color: "var(--extra3)",
+    items: [
+      { key: "daylight_duration", label: "Daylight", unit: "h", convert: (v) => (v / 3600).toFixed(1), tooltip: "Total hours of daylight" },
+      { key: "sunshine_duration", label: "Sunshine", unit: "h", convert: (v) => (v / 3600).toFixed(1), tooltip: "Total hours of sunshine" },
+    ],
+  },
+  {
+    title: "UV Index",
+    color: "var(--extra2)",
+    items: [
+      { key: "uv_index_max", label: "UV", unit: "", convert: (v) => v.toFixed(1), tooltip: "Maximum UV index for the day" },
+    ],
+  },
+  {
+    title: "Precipitation",
+    color: "var(--extra1)",
+    items: [
+      { key: "precipitation_sum", label: "Precip", unit: "mm", convert: (v) => v.toFixed(1), tooltip: "Total expected precipitation" },
+    ],
+  },
+  {
+    title: "Wind",
+    color: "var(--text)",
+    items: [
+      { key: "wind_speed_10m_max", label: "Speed", unit: "km/h", convert: (v) => v.toFixed(1), tooltip: "Maximum wind speed" },
+      { key: "wind_gusts_10m_max", label: "Gusts", unit: "km/h", convert: (v) => v.toFixed(1), tooltip: "Maximum wind gusts" },
+    ],
+  },
 ];
 
 export default function DailyForecastItem({ data }) {
@@ -93,20 +132,27 @@ export default function DailyForecastItem({ data }) {
 
   return (
     <div className="daily-forecast-item">
-      <div className="daily-forecast-header">
-        <div className="daily-forecast-day">{formatDay(dayDate)}</div>
-        <div className="daily-forecast-date">{formatDate(dayDate)}</div>
-        <div className="daily-forecast-icon" title={weatherIcon.label}>
-          <WeatherIconComponent size={28} />
-        </div>
+      <div className="daily-forecast-day">{formatDay(dayDate)}</div>
+      <div className="daily-forecast-date">{formatDate(dayDate)}</div>
+      <div className="daily-forecast-icon" title={weatherIcon.label}>
+        <WeatherIconComponent size={32} strokeWidth={1.5} />
       </div>
-      <div className="daily-forecast-data">
-        {dataFields.map((field) => (
-          <div key={field.key} className="daily-forecast-data-item" title={field.tooltip}>
-            <field.icon size={14} className="daily-forecast-data-icon" />
-            <span className="daily-forecast-data-value">
-              {field.convert ? field.convert(data[field.key]) : data[field.key]} {field.unit}
-            </span>
+      <div className="daily-forecast-groups">
+        {dataGroups.map((group) => (
+          <div key={group.title} className="daily-forecast-group">
+            <div className="daily-forecast-group-title" style={{ color: group.color }}>
+              {group.title}
+            </div>
+            {group.items.map((item) => (
+              <Tooltip key={item.key} text={item.tooltip}>
+                <div className="daily-forecast-group-item">
+                  <span className="daily-forecast-group-label">{item.label}:</span>
+                  <span className="daily-forecast-group-value">
+                    {item.convert(data[item.key])} {item.unit}
+                  </span>
+                </div>
+              </Tooltip>
+            ))}
           </div>
         ))}
       </div>
