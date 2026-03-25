@@ -314,16 +314,6 @@ export default function Main({ weatherData }) {
 
       <div className="main-top">
         <div className="main-section">
-          <div className="main-section-title">Current Conditions</div>
-          <div className="main-section-content">
-            {weatherData?.current ? (
-              <div>Current: {weatherData.current.temperature_2m}°C</div>
-            ) : (
-              <div className="empty-state">Select a location to see current conditions</div>
-            )}
-          </div>
-        </div>
-        <div className="main-section">
           <div className="main-section-title">Hourly Forecast</div>
           <div className="main-section-content">
             {forecastHours.length > 0 ? (
